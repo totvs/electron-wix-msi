@@ -105,7 +105,8 @@ export function arrayToTree(
   };
 
   let entryPoint = output;
-  if (appVersion) {
+  // TOTVS: Removendo lógica da criação de subpasta de versão no diretório de instalação
+  /*if (appVersion) {
     const versionNode = {
       __ELECTRON_WIX_MSI_FILES__: [],
       __ELECTRON_WIX_MSI_REGISTRY__: [],
@@ -114,7 +115,7 @@ export function arrayToTree(
     };
     output[`app-${appVersion}`] = versionNode;
     entryPoint = versionNode;
-  }
+  }*/
 
   const children: Array<string> = input.filter((e) => isChild(root, e));
   const directChildren: Array<string> = children.filter((e) =>
@@ -182,7 +183,9 @@ export function addFilesToTree(
   files.forEach((filePath) => {
     const file: File = { name: path.basename(filePath), path: filePath };
     const walkingSteps = filePath.split(separator);
-    let target: FileFolderTree = output[`app-${appVersion}`] as FileFolderTree;
+    // TOTVS: Removendo os arquivos de controle de atualização e versionamento internos (executável stub, .installInfo.json, etc)
+    //let target: FileFolderTree = output[`app-${appVersion}`] as FileFolderTree;
+    let target: FileFolderTree = output as FileFolderTree;
 
     walkingSteps.forEach((step, i) => {
       if (target[step] && i < walkingSteps.length - 1) {

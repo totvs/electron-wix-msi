@@ -946,13 +946,16 @@ export class MSICreator {
       forceDeleteOnUninstall: "yes",
     });
 
+    // TOTVS: Adicionado o parâmetro APPLICATIONROOTDIRECTORY no comando de
+    // desinstalação para que os arquivos também sejam removidos no caso de
+    // instalação em pasta não-padrão
     registry.push({
       id: "UninstallString",
       root: "HKMU",
       name: "UninstallString",
       key: uninstallKey,
       type: "expandable",
-      value: "MsiExec.exe /X {{{ProductCode}}}",
+      value: "MsiExec.exe /X {{{ProductCode}}} APPLICATIONROOTDIRECTORY=[APPLICATIONROOTDIRECTORY]",
       forceDeleteOnUninstall: "yes",
     });
 

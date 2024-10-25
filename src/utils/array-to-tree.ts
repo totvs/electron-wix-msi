@@ -178,12 +178,15 @@ export function addFilesToTree(
 
   output.__ELECTRON_WIX_MSI_REGISTRY__ = registry;
 
-  output.__ELECTRON_WIX_MSI_FILES__ = specialFiles;
+  // TOTVS: Removendo os arquivos de controle de atualização e versionamento internos (executável stub, .installInfo.json, etc)
+  //output.__ELECTRON_WIX_MSI_FILES__ = specialFiles;
+  output.__ELECTRON_WIX_MSI_FILES__ = [];
+
 
   files.forEach((filePath) => {
     const file: File = { name: path.basename(filePath), path: filePath };
     const walkingSteps = filePath.split(separator);
-    // TOTVS: Removendo os arquivos de controle de atualização e versionamento internos (executável stub, .installInfo.json, etc)
+    // TOTVS: Evitando a criação da subpasta de versionamento interno 
     //let target: FileFolderTree = output[`app-${appVersion}`] as FileFolderTree;
     let target: FileFolderTree = output as FileFolderTree;
 
